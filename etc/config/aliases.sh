@@ -47,6 +47,25 @@ alias wmUNSET='. $WM_PROJECT_DIR/etc/config/unset.sh'
 alias wmSchedON='export WM_SCHEDULER=$WM_PROJECT_DIR/wmake/wmakeScheduler'
 alias wmSchedOFF='unset WM_SCHEDULER'
 
+# Set hosts for scheduler
+#  - if none defined, single machine is assumed by wmakeScheduler
+wmHosts()
+{
+    export WM_HOSTS="$*"
+}
+
+# Set default colours for scheduler
+alias wmColours='black blue green cyan red magenta yellow'
+
+# Fast switching between multi-core and single-core building
+#   wmSCS - single-core single-machine
+#   wmMCS - multi-core single-machine
+#   wmMCM - multi-core multi-machine
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+alias wmSCS='unset WM_NCOMPPROCS && echo "Building enabled for a single core"'
+alias wmMCS='export WM_NCOMPPROCS=1; test -r /proc/cpuinfo && export WM_NCOMPPROCS=$(egrep "^processor" /proc/cpuinfo | wc -l) && echo "Building enabled for $WM_NCOMPPROCS cores"'
+alias wmMCM='export WM_NCOMPPROCS=$(wmSchedON; $WM_SCHEDULER -count) && echo "Building enabled for $WM_NCOMPPROCS core(s)"'
+
 # Change ParaView version
 # ~~~~~~~~~~~~~~~~~~~~~~~
 unset foamPV

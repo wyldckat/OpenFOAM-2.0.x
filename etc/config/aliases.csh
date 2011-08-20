@@ -39,13 +39,29 @@ alias wmSP 'wmSET WM_PRECISION_OPTION=SP'
 alias wmDP 'wmSET WM_PRECISION_OPTION=DP'
 
 # clear env
-alias wmUNSET='source $WM_PROJECT_DIR/etc/config/unset.csh'
+alias wmUNSET 'source $WM_PROJECT_DIR/etc/config/unset.csh'
 
 # Toggle wmakeScheduler on/off
 #  - also need to set WM_HOSTS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 alias wmSchedON 'setenv WM_SCHEDULER $WM_PROJECT_DIR/wmake/wmakeScheduler'
 alias wmSchedOFF 'unsetenv WM_SCHEDULER'
+
+# Set hosts for scheduler
+#  - if none defined, single machine is assumed automatically
+alias wmHosts 'setenv WM_HOSTS'
+
+# Set default colours for scheduler
+alias wmColours 'black blue green cyan red magenta yellow'
+
+# Fast switching between multi-core and single-core building
+#   wmSCS - single-core single-machine
+#   wmMCS - multi-core single-machine
+#   wmMCM - multi-core multi-machine
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+alias wmSCS 'unsetenv WM_NCOMPPROCS && echo "Building enabled for a single core"'
+alias wmMCS 'setenv WM_NCOMPPROCS 1; test -r /proc/cpuinfo && setenv WM_NCOMPPROCS `egrep "^processor" /proc/cpuinfo | wc -l` && echo "Building enabled for $WM_NCOMPPROCS cores"'
+alias wmMCM 'setenv WM_NCOMPPROCS `wmSchedON; $WM_SCHEDULER -count` && echo "Building enabled for $WM_NCOMPPROCS cores"'
 
 # Change ParaView version
 # ~~~~~~~~~~~~~~~~~~~~~~~

@@ -74,8 +74,7 @@ case "$ParaView_MAJOR".*:
 
 case [0-9]*:
     # extract major from the version
-    setenv ParaView_MAJOR `echo ${ParaView_VERSION} | \
-        sed -e 's/^\([0-9][0-9]*\.[0-9][0-9]*\).*$/\1/'`
+    setenv ParaView_MAJOR `echo ${ParaView_VERSION} | sed -e 's/^\([0-9][0-9]*\.[0-9][0-9]*\).*$/\1/'`
     breaksw
 endsw
 

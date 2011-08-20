@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "Running with 6 cores:"
+wcleanAll
+wcleanLnIncludeAll
+time ./Allwmake -j -k > make_j.log 2>&1
+
+echo "Running with 7 cores:"
+wcleanAll
+wcleanLnIncludeAll
+time ./Allwmake -j+ -k > make_j+.log 2>&1
+
+echo "Running with 6 cores again:"
+wcleanAll
+wcleanLnIncludeAll
+time ./Allwmake -j -k > make_j2.log 2>&1
+

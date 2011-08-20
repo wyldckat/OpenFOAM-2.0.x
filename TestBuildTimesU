@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Running with 1 cores:"
+wcleanAll
+wcleanLnIncludeAll
+time ./Allwmake -j1 -k > make_j1c.log 2>&1
+
+echo "Running with 2 cores:"
+wcleanAll
+wcleanLnIncludeAll
+time ./Allwmake -j2 -k > make_j2c.log 2>&1
+
+

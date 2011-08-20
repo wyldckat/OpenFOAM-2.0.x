@@ -209,6 +209,12 @@ then
                 break
             fi
         done
+
+        #
+        # Send FOAM_SETTINGS to parallel processes. so the proper definitions are sent as well.
+        #
+        mpiopts="$mpiopts -x FOAM_SETTINGS"
+
         ;;
     esac
 

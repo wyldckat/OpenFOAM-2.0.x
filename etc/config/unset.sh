@@ -72,6 +72,7 @@ unset WM_PROJECT_USER_DIR
 unset WM_PROJECT_VERSION
 unset WM_SCHEDULER
 unset WM_THIRD_PARTY_DIR
+unset WM_CONTINUE_ON_ERROR
 
 
 #------------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 #!/bin/sh
 cd ${0%/*} || exit 1    # run from this directory
+. $WM_PROJECT_DIR/wmake/scripts/AllwmakeArguments
 
 [ -d "$WM_PROJECT_DIR" ] || {
     echo "Error: WM_PROJECT_DIR directory does not exist"

@@ -47,6 +47,11 @@ alias wmUNSET='source $WM_PROJECT_DIR/etc/config/unset.csh'
 alias wmSchedON 'setenv WM_SCHEDULER $WM_PROJECT_DIR/wmake/wmakeScheduler'
 alias wmSchedOFF 'unsetenv WM_SCHEDULER'
 
+# Toggle WM_CONTINUE_ON_ERROR on/off
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+alias wmNONSTOP 'setenv WM_CONTINUE_ON_ERROR 1'
+alias wmSTOPON1st 'unsetenv WM_CONTINUE_ON_ERROR'
+
 # Change ParaView version
 # ~~~~~~~~~~~~~~~~~~~~~~~
 alias foamPV 'source `$WM_PROJECT_DIR/etc/config/paraview.csh` ParaView_VERSION=\!*; echo paraview-$ParaView_VERSION'

@@ -1,6 +1,6 @@
 #!/bin/sh
 cd ${0%/*} || exit 1    # run from this directory
-makeType=${1:-libso}
+allwmakeOptions='-allow-lib makeType' && . $WM_PROJECT_DIR/wmake/scripts/AllwmakeArguments
 
 wmakeCheckPwd "$WM_PROJECT_DIR/src" || {
     echo "Error: Current directory is not \$WM_PROJECT_DIR/src"
@@ -22,7 +22,7 @@ wmakePrintBuild -check || /bin/rm -f OpenFOAM/Make/*/global.? 2>/dev/null
 
 wmakeLnInclude OpenFOAM
 wmakeLnInclude OSspecific/${WM_OSTYPE:-POSIX}
-Pstream/Allwmake $*
+Pstream/Allwmake $OriginalOptions
 
 OSspecific/${WM_OSTYPE:-POSIX}/Allwmake
 wmake $makeType OpenFOAM
@@ -36,7 +36,7 @@ wmake $makeType surfMesh
 # Decomposition methods needed by dummyThirdParty
 parallel/decompose/AllwmakeLnInclude
 # dummyThirdParty (dummy metisDecomp, scotchDecomp etc) needed by e.g. meshTools
-dummyThirdParty/Allwmake $*
+dummyThirdParty/Allwmake $OriginalOptions
 
 wmake $makeType finiteVolume
 wmake $makeType lagrangian/basic
@@ -44,7 +44,7 @@ wmake $makeType lagrangian/distributionModels
 wmake $makeType genericPatchFields
 
 # Build the proper scotchDecomp, metisDecomp etc.
-parallel/Allwmake $*
+parallel/Allwmake $OriginalOptions
 
 wmake $makeType conversion
 
@@ -57,16 +57,16 @@ wmake $makeType topoChangerFvMesh
 wmake $makeType ODE
 wmake $makeType randomProcesses
 
-thermophysicalModels/Allwmake $*
-transportModels/Allwmake $*
-turbulenceModels/Allwmake $*
+thermophysicalModels/Allwmake $OriginalOptions
+transportModels/Allwmake $OriginalOptions
+turbulenceModels/Allwmake $OriginalOptions
 wmake $makeType combustionModels
-regionModels/Allwmake $*
-lagrangian/Allwmake $*
-postProcessing/Allwmake $*
-mesh/Allwmake $*
+regionModels/Allwmake $OriginalOptions
+lagrangian/Allwmake $OriginalOptions
+postProcessing/Allwmake $OriginalOptions
+mesh/Allwmake $OriginalOptions
 
-fvAgglomerationMethods/Allwmake $*
+fvAgglomerationMethods/Allwmake $OriginalOptions
 
 wmake $makeType fvMotionSolver
 wmake $makeType engine

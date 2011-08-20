@@ -3,6 +3,7 @@
 # Build optional components (eg, may depend on third-party libraries)
 # -----------------------------------------------------------------------------
 cd ${0%/*} || exit 1    # run from this directory
+. $WM_PROJECT_DIR/wmake/scripts/AllwmakeArguments
 set -x
 
 # build libccmio and create lnInclude directory

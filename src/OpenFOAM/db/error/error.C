@@ -33,6 +33,8 @@ License
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+bool Foam::FatalErrorIsInstantiated=false;
+
 Foam::error::error(const string& title)
 :
     std::exception(),
@@ -51,6 +53,7 @@ Foam::error::error(const string& title)
             << endl;
         exit(1);
     }
+    FatalErrorIsInstantiated=true;
 }
 
 
@@ -73,6 +76,7 @@ Foam::error::error(const dictionary& errDict)
             << endl;
         exit(1);
     }
+    FatalErrorIsInstantiated=true;
 }
 
 
@@ -88,12 +92,14 @@ Foam::error::error(const error& err)
     messageStreamPtr_(new OStringStream(*err.messageStreamPtr_))
 {
     //*messageStreamPtr_ << err.message();
+    FatalErrorIsInstantiated=true;
 }
 
 
 Foam::error::~error() throw()
 {
     delete messageStreamPtr_;
+    FatalErrorIsInstantiated=false;
 }
 
 
@@ -104,9 +110,24 @@ Foam::OSstream& Foam::error::operator()
     const int sourceFileLineNumber
 )
 {
-    functionName_ = functionName;
-    sourceFileName_ = sourceFileName;
-    sourceFileLineNumber_ = sourceFileLineNumber;
+    if(FatalErrorIsInstantiated)
+    {
+      functionName_ = functionName;
+      sourceFileName_ = sourceFileName;
+      sourceFileLineNumber_ = sourceFileLineNumber;
+    }
+    else
+    {
+        cerr<< "Foam::error::operator():\n"
+            << "--- Emergency exit deployed ---\n"
+            << "Messages to be delivered:\n"
+            << "\t Function Name of the reporter: " << functionName << std::endl
+            << "\t Source Filename of the function: " << sourceFileName << std::endl
+            << "\t Source line number: " << sourceFileLineNumber << std::endl
+            << "--- Next step will be a segfault. ---"
+            << std::endl << std::endl;
+        exit(1);
+    }
 
     return operator OSstream&();
 }

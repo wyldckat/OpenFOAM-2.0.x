@@ -31,6 +31,7 @@ License
 #include "Pstream.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+bool Foam::FatalIOErrorIsInstantiated=false;
 
 Foam::IOerror::IOerror(const string& title)
 :
@@ -38,7 +39,9 @@ Foam::IOerror::IOerror(const string& title)
     ioFileName_("unknown"),
     ioStartLineNumber_(-1),
     ioEndLineNumber_(-1)
-{}
+{
+    FatalIOErrorIsInstantiated=true;
+}
 
 
 Foam::IOerror::IOerror(const dictionary& errDict)
@@ -47,11 +50,15 @@ Foam::IOerror::IOerror(const dictionary& errDict)
     ioFileName_(errDict.lookup("ioFileName")),
     ioStartLineNumber_(readLabel(errDict.lookup("ioStartLineNumber"))),
     ioEndLineNumber_(readLabel(errDict.lookup("ioEndLineNumber")))
-{}
+{
+    FatalIOErrorIsInstantiated=true;
+}
 
 
 Foam::IOerror::~IOerror() throw()
-{}
+{
+  FatalIOErrorIsInstantiated=false;
+}
 
 
 Foam::OSstream& Foam::IOerror::operator()
@@ -64,11 +71,28 @@ Foam::OSstream& Foam::IOerror::operator()
     const label ioEndLineNumber
 )
 {
-    error::operator()(functionName, sourceFileName, sourceFileLineNumber);
-    ioFileName_ = ioFileName;
-    ioStartLineNumber_ = ioStartLineNumber;
-    ioEndLineNumber_ = ioEndLineNumber;
-
+    if(FatalIOErrorIsInstantiated)
+    {
+        error::operator()(functionName, sourceFileName, sourceFileLineNumber);
+        ioFileName_ = ioFileName;
+        ioStartLineNumber_ = ioStartLineNumber;
+        ioEndLineNumber_ = ioEndLineNumber;
+    }
+    else
+    {
+        cerr<< "Foam::IOerror::operator():\n"
+            << "--- Emergency exit deployed ---\n"
+            << "Messages to be delivered:\n"
+            << "\t Function Name of the reporter: " << functionName << std::endl
+            << "\t Source Filename of the function: " << sourceFileName << std::endl
+            << "\t Source line number: " << sourceFileLineNumber << std::endl
+            << "\t Filename that triggered this error: " << ioFileName << std::endl
+            << "\t Start line number of the offense: " << ioStartLineNumber << std::endl
+            << "\t ending at: " << ioEndLineNumber << std::endl << std::endl
+            << "--- Next step will be a segfault. ---"
+            << std::endl << std::endl;
+        exit(1);
+    }
     return operator OSstream&();
 }
 

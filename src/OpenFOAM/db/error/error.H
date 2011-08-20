@@ -55,6 +55,10 @@ SourceFiles
 namespace Foam
 {
 
+// These two must be set when the respective classes have been instantiated
+extern bool FatalErrorIsInstantiated;
+extern bool FatalIOErrorIsInstantiated;
+
 // Forward declaration of friend functions and operators
 class error;
 Ostream& operator<<(Ostream&, const error&);

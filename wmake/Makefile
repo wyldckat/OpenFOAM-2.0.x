@@ -151,12 +151,12 @@ $(EXE):  $(OBJECTS)
 	     $(EXE_LIBS) $(PROJECT_LIBS) $(SYS_LIBS) $(LINK_LIBS) $(GLIBS) -o $(EXE)
 
 exe:     $(SEXE)
-	     @echo \'$(SEXE)\' is up to date.
+	     @echo \'$(EXE)\' is up to date.
 
 $(SEXE): $(OBJECTS)
 	     @$(WM_SCRIPTS)/makeTargetDir $(SEXE)
-	     $(LINKEXE) $(OBJECTS) $(EXE_LIBS) \
-         $(SYS_LIBS) $(LINK_LIBS) $(GLIBS) -o $(SEXE)
+	     $(LINKEXE) $(OBJECTS) $(LIB_PLATFORMS)/libOSspecific.o -L$(LIB_PLATFORMS) -L$(LIB_PLATFORMS)/$(FOAM_MPI) \
+	     $(EXE_LIBS) $(PROJECT_LIBS) $(LINK_LIBS) $(SYS_LIBS) $(WM_CONGLOMERATE) $(GLIBS) -lmpi -lz -o $(EXE)
 
 
 #------------------------------------------------------------------------------
@@ -171,6 +171,7 @@ libso:   $(LIB).$(SO)
 $(LIB).$(SO): $(OBJECTS)
 	     @$(WM_SCRIPTS)/makeTargetDir $(LIB)
 	     @rm -f so_locations
+	     @echo $(LINKLIBSO) $(LOCAL_OBJECTS) -L$(LIB_PLATFORMS) $(LIB_LIBS) $(GLIB_LIBS) -o $(LIB).$(SO)
 	     @cd $(OBJECTS_DIR) ; \
 	     $(LINKLIBSO) $(LOCAL_OBJECTS) -L$(LIB_PLATFORMS) $(LIB_LIBS) $(GLIB_LIBS) -o $(LIB).$(SO)
 

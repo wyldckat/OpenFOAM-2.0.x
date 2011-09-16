@@ -156,7 +156,7 @@ exe:     $(SEXE)
 $(SEXE): $(OBJECTS)
 	     @$(WM_SCRIPTS)/makeTargetDir $(SEXE)
 	     $(LINKEXE) $(OBJECTS) $(LIB_PLATFORMS)/libOSspecific.o -L$(LIB_PLATFORMS) -L$(LIB_PLATFORMS)/$(FOAM_MPI) \
-	     $(EXE_LIBS) $(WM_CONGLOMERATE) $(LINK_LIBS) $(SYS_LIBS) $(PROJECT_LIBS) $(GLIBS) $(WM_CONGLOMERATE) $(WM_CONGLOMERATE) -lmpi -lz -o $(EXE)
+	     $(WM_CONGLOMERATE) $(EXE_LIBS) $(PROJECT_LIBS) $(SYS_LIBS) $(LINK_LIBS) $(GLIBS) -lmpi -lz -o $(EXE)
 
 
 #------------------------------------------------------------------------------

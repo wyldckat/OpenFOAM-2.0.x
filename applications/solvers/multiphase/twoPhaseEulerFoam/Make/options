@@ -9,9 +9,9 @@ EXE_INC = \
     -Iaveraging
 
 EXE_LIBS = \
+    -lphaseModel \
     -lEulerianInterfacialModels \
     -lfiniteVolume \
     -lmeshTools \
     -lincompressibleTransportModels \
-    -lphaseModel \
     -lkineticTheoryModel

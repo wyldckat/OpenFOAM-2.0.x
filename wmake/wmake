@@ -276,7 +276,7 @@ lib | libo | libso )
     fi
     ;;
 exe )
-    export WM_CONGLOMERATE="`cat $FOAM_SRC/libStack.log`"
+    export WM_CONGLOMERATE="`tac $FOAM_SRC/libStack.log`"
     export WM_CONGLOMERATE="`echo $WM_CONGLOMERATE`"
     ;;
 esac

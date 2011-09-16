@@ -17,6 +17,12 @@ wmakeCheckPwd "$WM_PROJECT_DIR/src" || {
 
 set -x
 
+#clean up the library building stack log
+test -e libStack.log && rm libStack.log
+if [ "$makeType" = "lib" ]; then
+  export WM_STATIC_TRACKING=1
+fi
+
 # update OpenFOAM version strings if required
 wmakePrintBuild -check || /bin/rm -f OpenFOAM/Make/*/global.? 2>/dev/null
 

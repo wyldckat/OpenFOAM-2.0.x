@@ -5,8 +5,9 @@ set -x
 
 wmake $makeType scotchDecomp
 wmake $makeType ptscotchDecomp
-wmake $makeType metisDecomp
-wmake $makeType MGridGen
-
+if [ "$makeType" != "lib" ]; then
+  wmake $makeType metisDecomp
+  wmake $makeType MGridGen
+fi
 
 # ----------------------------------------------------------------- end-of-file

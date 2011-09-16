@@ -20,7 +20,7 @@ set -x
 #clean up the library building stack log
 test -e libStack.log && rm libStack.log
 if [ "$makeType" = "lib" ]; then
-  export WM_STATIC_TRACKING=1
+  export WM_STATIC_TRACKING=Yes
 fi
 
 # update OpenFOAM version strings if required

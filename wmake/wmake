@@ -228,6 +228,13 @@ then
       fi
 fi
 
+if [ "$makeType" = "libso" ]
+then
+      if [ -n "$WM_STATIC" ]; then
+        makeType=lib
+      fi
+fi
+
 # Spawn a sub-shell and unset MAKEFLAGS in that sub-shell to avoid
 # files and options being built in parallel
 (

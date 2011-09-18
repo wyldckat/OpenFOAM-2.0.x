@@ -106,6 +106,7 @@ GENCORETAG
     #generate core version information
     cat << GENCORETAG
 
+#define FOAM_PROJECT_NAME "$WM_PROJECT"
 #define FOAM_VERSION_MAJOR $toolbox_major
 #define FOAM_VERSION_MINOR $toolbox_minor
 #define FOAM_VERSION_PATCHLEVEL $toolbox_patch

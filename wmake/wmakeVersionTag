@@ -97,20 +97,19 @@ genCoreTag()
     #generate header inclusion limiter
     cat << GENCORETAG
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
 #ifndef FOAMVERSIONTAG_H
 #define FOAMVERSIONTAG_H
+
 GENCORETAG
 
     #generate core version information
     cat << GENCORETAG
+//TIP: use #FOAM_PROJECT_NAME to get the defined symbol in string form.
 
-#define FOAM_PROJECT_NAME "$WM_PROJECT"
+#define FOAM_PROJECT_NAME $WM_PROJECT
 #define FOAM_VERSION_MAJOR $toolbox_major
 #define FOAM_VERSION_MINOR $toolbox_minor
 #define FOAM_VERSION_PATCHLEVEL $toolbox_patch
-
 GENCORETAG
 
     #generate git related version information
@@ -119,16 +118,16 @@ GENCORETAG
     cat << GENCORETAG
 
 #define FOAM_VERSION_GIT_COMMIT $toolbox_gitcommit
-
-// ************************************************************************* //
-
-// ------------------------------------------------------------------------- //
 GENCORETAG
     fi
 
     #finish header inclusion limiter
     cat << GENCORETAG
+
 #endif
+
+// ************************************************************************* //
+
 GENCORETAG
 }
 

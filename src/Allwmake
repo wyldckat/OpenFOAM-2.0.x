@@ -22,6 +22,8 @@ wmakePrintBuild -check || /bin/rm -f OpenFOAM/Make/*/global.? 2>/dev/null
 
 wmakeLnInclude OpenFOAM
 wmakeLnInclude OSspecific/${WM_OSTYPE:-POSIX}
+wmakeVersionTag #generate version tag, after OpenFOAM/lnInclude has been created
+
 Pstream/Allwmake $*
 
 OSspecific/${WM_OSTYPE:-POSIX}/Allwmake
